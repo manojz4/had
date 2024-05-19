@@ -1,0 +1,10 @@
+In osboxes add new user
+-sudo adduser hduser
+
+
+Give permission to hduser in OSBOXES
+-sudo visudo
+-hduser  ALL=(ALL:ALL) ALL   (add this)save and exit.
+
+
+Login as hduser
