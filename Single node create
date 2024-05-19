@@ -107,7 +107,7 @@ export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
 </property>
 <property>
 <name>fs.defaultFS</name>
-<value>hdfs://master:9000</value>
+<value>hdfs://localhost:9000</value>
 </property>
 </configuration>
 ----------
