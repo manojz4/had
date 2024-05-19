@@ -69,4 +69,86 @@ sudo mkdir -p /usr/local/hadoop/hd_store/tmp
 sudo mkdir -p /usr/local/hadoop/hd_store/namenode
 sudo mkdir -p /usr/local/hadoop/hd_store/datanode
 
+-change owner of file and directory
+sudo chown -R hduser:hduser /usr/local/hadoop
+
+-modify file permission
+sudo chmod 755 -R /usr/local/hadoop
+___________________________________
+
+-open etc/hadoop
+cd $HADOOP_HOME/etc/hadoop
+
+-Edit the hadoop-env.sh file 
+#JAVA
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+export JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+#Hadoop Environment Variables
+export HADOOP_HOME=/usr/local/hadoop
+export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+export HADOOP_LOG_DIR=$HADOOP_HOME/logs
+export HDFS_NAMENODE_USER=hduser
+export HDFS_DATANODE_USER=hduser
+export HDFS_SECONDARYNAMENODE_USER=hduser
+export YARN_RESOURCEMANAGER_USER=hduser
+export YARN_NODEMANAGER_USER=hduser
+export YARN_NODEMANAGER_USER=hduser
+# Add Hadoop bin/ directory to PATH
+export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native
+
+----------
+-Edit core-site.xml
+<configuration>
+<property>
+<name>hadoop.tmp.dir</name>
+<value>/usr/local/hadoop/hd_store/tmp</value>
+</property>
+<property>
+<name>fs.defaultFS</name>
+<value>hdfs://master:9000</value>
+</property>
+</configuration>
+----------
+-Edit yarn-site.xml
+<configuration>
+<property>
+<name>yarn.nodemanager.aux-services</name>
+<value>mapreduce_shuffle</value>
+</property>
+</configuration>
+---------
+-Edit hdfs-site.xml
+<configuration>
+<property>
+<name>dfs.replication</name>
+<value>1</value>
+</property>
+<property>
+<name>dfs.name.dir</name>
+<value>/usr/local/hadoop/hd_store/namenode</value>
+</property>
+<property>
+<name>dfs.data.dir</name>
+<value>/usr/local/hadoop/hd_store/datanode</value>
+</property>
+</configuration>
+--------
+-Edit mapred-site.xml
+<configuration>
+<property>
+<name>mapreduce.framework.name</name>
+<value>yarn</value>
+</property>
+</configuration>
+--------
+-Edit workers file
+leave as it is
+-------
+-Start hadoop Daemon
+cd $HADOOP_HOME/sbin
+hadoop namenode -format
+start-dfs.sh
+start-yarn.sh
 
