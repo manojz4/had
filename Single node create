@@ -96,7 +96,7 @@ export YARN_NODEMANAGER_USER=hduser
 # Add Hadoop bin/ directory to PATH
 export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
 export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
-export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
 
 ----------
 -Edit core-site.xml
