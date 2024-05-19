@@ -1,11 +1,47 @@
-In osboxes add new user
--sudo adduser hduser
+-In osboxes add new user
+sudo adduser hduser
 
 
-Give permission to hduser in OSBOXES
--sudo visudo
--hduser  ALL=(ALL:ALL) ALL   (add this)save and exit.
+-Give permission to hduser in OSBOXES
+sudo visudo
+hduser  ALL=(ALL:ALL) ALL   (add this)save and exit.
 
 
-Login as hduser
-Install Java
+-Login as hduser
+-Install Java
+sudo apt install openjdk-8-jdk
+
+-confirm if java is installed
+java -version
+
+-edit bash file
+sudo nano ~/.bashrc
+
+-Add this file 
+#JAVA
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+export JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+#Hadoop Environment Variables
+export HADOOP_HOME=/usr/local/hadoop
+export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+export HADOOP_LOG_DIR=$HADOOP_HOME/logs
+# Add Hadoop bin/ directory to PATH
+export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/nativeexport HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native" export PDSH_RCMD_TYPE=ssh
+
+-Now reload bashrc file
+source ~/.bashrc
+
+-Now setup ssh
+sudo apt install ssh -y
+sudo apt install pdsh -y
+sudo systemctl start ssh
+sudo systemctl enable ssh
+
+-Now enable passwordless ssh
+ssh-keygen -t rsa
+
+-This will create a .ssh folder, id_rsa, id_rsa.pubfile in the user home directory
+
+-Copy public key file 
+ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@localhost
