@@ -148,6 +148,8 @@ leave as it is
 -------
 -Start hadoop Daemon
 cd $HADOOP_HOME/sbin
+-------
+-restart vm/system
 hadoop namenode -format
 start-dfs.sh
 start-yarn.sh
