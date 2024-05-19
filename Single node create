@@ -45,3 +45,28 @@ ssh-keygen -t rsa
 
 -Copy public key file 
 ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@localhost
+
+-to confirm no password ask
+ssh hduser@localhost
+
+-Download hadoop
+wget -c -O hadoop.tar.gz https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/hadoop-3.2.4.tar.gz
+
+-make a diretory
+sudo mkdir /usr/local/hadoop
+
+-extract tar file
+tar xvzf hadoop.tar.gz
+
+-move the file
+sudo mv hadoop-3.2.4/* /usr/local/hadoop
+
+
+-Now configure Hadoop
+-- Now create directory for namenode and datanode
+
+sudo mkdir -p /usr/local/hadoop/hd_store/tmp
+sudo mkdir -p /usr/local/hadoop/hd_store/namenode
+sudo mkdir -p /usr/local/hadoop/hd_store/datanode
+
+
