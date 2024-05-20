@@ -1,1 +1,127 @@
-First
+-In master
+sudo passwd osboxes
+
+-adduser
+sudo adduser hduser
+sudo visudo
+-add this file
+hduser  ALL=(ALL:ALL) NOPASSWD:ALL
+
+-switch user to hduser
+sudo apt update
+sudo apt install openjdk-8-jdk -y
+sudo apt install net-tools -y
+sudo apt install ssh vim pdsh
+cd
+
+--set hostname
+sudo hostnamectl set-hostname master
+sudo hostname master
+(open new terminal)
+
+-open bashrc file
+nano .bashrc
+
+#JAVA
+	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+	export JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+
+	#Hadoop Environment Variables
+	export HADOOP_HOME=/usr/local/hadoop
+	export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+	export HADOOP_LOG_DIR=$HADOOP_HOME/logs
+
+	# Add Hadoop bin/ directory to PATH
+	export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+	export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+	export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native" 
+	export PDSH_RCMD_TYPE=ssh
+--------
+-reload bashrc file
+source ~/.bashrc
+--------
+-setup ssh & enable
+sudo systemctl start ssh
+sudo systemctl enable ssh
+
+-Enable passwordless SSH
+ssh-keygen -t rsa
+ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@localhost 
+ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@master
+ssh hduser@localhost
+exit
+
+-Download Hadoop
+wget -c -O hadoop.tar.gz https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/hadoop-3.2.4.tar.gz
+sudo mkdir /usr/local/hadoop
+tar xvzf hadoop.tar.gz
+sudo mv hadoop-3.2.4/* /usr/local/hadoop
+
+cd /usr/local/hadoop/etc/hadoop
+ls
+
+-----
+nano core-site.xml
+
+<configuration>
+    	<property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://master:9000</value>
+    	</property>
+	</configuration>
+-----
+nano  hadoop-env.sh
+JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+-----
+nano hdfs-site.xml<configuration>
+        <property>
+        <name>dfs.name.dir</name>
+        <value>/usr/local/hadoop/hd-data/nn</value>
+        </property>
+        <property>
+        <name>dfs.replication</name>
+        <value>2</value>
+        </property>
+        </configuration>
+-----
+nano mapred-site.xml
+<configuration>
+    	<property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+   	</property>
+    	<property>
+        <name>mapreduce.application.classpath</name>
+        <value>$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*:$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib/*</value>
+   	</property>
+	</configuration>
+-----
+nano yarn-site.xml
+<configuration>
+    	<property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>master</value>
+    	</property>
+	</configuration>
+-----
+nano workers (clear localhost and enter dn1,dn2,...this is case sensitive)
+-----
+
+cd
+sudo mkdir /usr/local/hadoop/hd-data
+ip a
+-note down ip
+192.168.144.129(may vary)
+sudo nano /etc/hosts
+
+-enter ip in etc host file
+192.168.144.129 master
+sudo init 0/manually restart vm
+
+-take snapshot
+-make 2 clones for datanode
+
+
+
+
+
