@@ -56,6 +56,8 @@ wget -c -O hadoop.tar.gz https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/had
 sudo mkdir /usr/local/hadoop
 tar xvzf hadoop.tar.gz
 sudo mv hadoop-3.2.4/* /usr/local/hadoop
+sudo chown -R hduser:hduser /usr/local/hadoop
+sudo chmod -R 755 /usr/local/hadoop
 
 cd /usr/local/hadoop/etc/hadoop
 ls
@@ -120,6 +122,167 @@ sudo init 0/manually restart vm
 
 -take snapshot
 -make 2 clones for datanode
+
+************************
+
+-open datanode1 (first configuration)
+-login as hduser
+
+-change hostname
+sudo hostnamectl set-hostname dn1
+sudo hostname dn1
+-open new terminal
+
+cat .bashrc
+cd /usr/local/hadoop/etc/hadoop
+------
+nano hdfs-site.xml
+
+<configuration>
+    	<property>
+        <name>dfs.data.dir</name>
+        <value>/usr/local/hadoop/hd-data/dn</value>
+   	</property>
+    	<property>
+        <name>dfs.replication</name>
+        <value>2</value>
+    	</property>
+	</configuration>
+------
+nano yarn-site.xml
+<configuration>
+<property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>master</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.local-dirs</name>
+        <value>/usr/local/hadoop/hd-data/yarn/data</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.logs-dirs</name>
+        <value>/usr/local/hadoop/hd-data/yarn/logs</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.disk-health-checker.max-disk-utilization-perdisk-percentage</name>
+        <value>99.9</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.vmem-check-enabled</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.env-whitelist</name>
+        <value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
+    </property>
+</configuration>
+------
+- nano workers
+- localhost
+------
+cd
+sudo mkdir /usr/local/hadoop/yarn
+ip a (note ip addr)
+
+sudo vim /etc/hosts
+-add ip address in host file
+
+*****************
+
+-open datanode2 (second configuration)
+-login as hduser
+
+-change hostname
+sudo hostnamectl set-hostname dn2
+sudo hostname dn2
+-open new terminal
+
+cat .bashrc
+cd /usr/local/hadoop/etc/hadoop
+------
+nano hdfs-site.xml
+
+<configuration>
+    	<property>
+        <name>dfs.data.dir</name>
+        <value>/usr/local/hadoop/hd-data/dn</value>
+   	</property>
+    	<property>
+        <name>dfs.replication</name>
+        <value>2</value>
+    	</property>
+	</configuration>
+------
+nano yarn-site.xml
+<configuration>
+<property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>master</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.local-dirs</name>
+        <value>/usr/local/hadoop/hd-data/yarn/data</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.logs-dirs</name>
+        <value>/usr/local/hadoop/hd-data/yarn/logs</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.disk-health-checker.max-disk-utilization-perdisk-percentage</name>
+        <value>99.9</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.vmem-check-enabled</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.env-whitelist</name>
+        <value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
+    </property>
+</configuration>
+------
+- nano workers
+- localhost
+------
+cd
+sudo mkdir /usr/local/hadoop/yarn
+ip a (note ip addr)
+
+sudo nano /etc/hosts
+-add ip address in host file
+
+**************************
+-Open master
+ip a
+sudo nano /etc/hosts
+enter ip of both data node
+ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@dn1
+cd /usr/local/hadoop/etc/hadoop
+nano workers
+	(dn1,dn2)
+
+hadoop namenode -format
+-Restart all datanodes and master
+
+-Now open master
+start-all.sh
+jps
+
+-Now go in dn1,dn2 and do
+jps
+-----
+In master
+http://master:9870
+
+
 
 
 
