@@ -53,6 +53,9 @@ ssh-keygen -t rsa
 
 -Copy public key file 
 ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@localhost
+ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@master
+(choose according to question)
+
 
 -to confirm no password ask
 ssh hduser@localhost
