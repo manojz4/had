@@ -8,6 +8,12 @@ hduser  ALL=(ALL:ALL) ALL   (add this)save and exit.
 
 
 -Login as hduser
+
+-set hostname
+sudo hostnamectl set-hostname master
+sudo hostname master
+(open new terminal)
+
 -Install Java
 sudo apt install openjdk-8-jdk
 
@@ -27,7 +33,9 @@ export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
 export HADOOP_LOG_DIR=$HADOOP_HOME/logs
 # Add Hadoop bin/ directory to PATH
 export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
-export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/nativeexport HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native" export PDSH_RCMD_TYPE=ssh
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native" 
+export PDSH_RCMD_TYPE=ssh
 
 -Now reload bashrc file
 source ~/.bashrc
@@ -107,9 +115,10 @@ export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
 </property>
 <property>
 <name>fs.defaultFS</name>
-<value>hdfs://localhost:9000</value>
+<value>hdfs://localhost:9000</value>  
 </property>
 </configuration>
+-note(if in set hostname you put master then put here master in place of localhost)
 ----------
 -Edit yarn-site.xml
 <configuration>
