@@ -1,0 +1,28 @@
+create group DBDA ad two user   and  group AI ad two user
+
+create group:
+    sudo addgroup dbda
+    sudo addgroup ai
+
+create user
+    sudo adduser --ingroup dbda vikas
+    sudo adduser --ingroup dbda shreeya
+    sudo adduser --ingroup ai manisha 
+    sudo adduser --ingroup ai Rohit
+
+cat /etc/passwd   (check password)
+cat /etc/group    (check group)
+
+mkdir :
+hdfs dfs -mkdir /youtube
+hdfs dfs -mkdir /twitter
+hdfs dfs -mkdir /nlp
+
+ hdfs dfs -ls /
+
+change owner:
+    hdfs dfs -chown vikas:dbda /youtube
+    hdfs dfs -chown shreeya:dbda /twitter
+    hdfs dfs -chown manisha:ai /nlp
+    hdfs dfs -chmod g+w  /nlp
+ hdfs dfs -ls /
