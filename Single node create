@@ -162,4 +162,5 @@ leave as it is
 hadoop namenode -format
 -restart vm/system
 start-all.sh
+jps
 
