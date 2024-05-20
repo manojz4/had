@@ -59,6 +59,7 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@master
 
 -to confirm no password ask
 ssh hduser@localhost
+exit
 
 -Download hadoop
 wget -c -O hadoop.tar.gz https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/hadoop-3.2.4.tar.gz
