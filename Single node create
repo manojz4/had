@@ -159,11 +159,7 @@ export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
 -Edit workers file
 leave as it is
 -------
--Start hadoop Daemon
-cd $HADOOP_HOME/sbin
--------
--restart vm/system
 hadoop namenode -format
-start-dfs.sh
-start-yarn.sh
+-restart vm/system
+start-all.sh
 
