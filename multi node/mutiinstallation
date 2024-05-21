@@ -190,6 +190,9 @@ ip a (note ip addr)
 
 sudo vim /etc/hosts
 -add ip address in host file
+192 master
+192 dn1
+192 dn2
 
 *****************
 
@@ -258,6 +261,9 @@ ip a (note ip addr)
 
 sudo nano /etc/hosts
 -add ip address in host file
+192 master
+192 dn1
+192 dn2
 
 **************************
 -Open master
