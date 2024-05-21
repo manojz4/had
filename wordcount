@@ -107,3 +107,4 @@ hdfs dfs -ls /wordcount
 hdfs dfs -ls /wordcount/output
 hdfs dfs -cat /wordcount/output/part-r-00000
 
+
