@@ -4,13 +4,12 @@ jps
 hdfs dfs -mkdir /wordcount
 hdfs dfs -mkdir /wordcount/input         
 hdfs dfs -put words.txt /wordcount/input  
-hadoop jar wc.jar WordCount /wordcount/input /wordcount/output      
-start-all.sh
 
-hdfs dfs -ls /wordcount
-hdfs dfs -ls /wordcount/output
-hdfs dfs -cat /wordcount/output/part-r-00000
 
-(to do if safemode is on)
+
+
+
+to check replication factor or change the replicationfactor
+
 hdfs dfs -setrep -w 2 /wordcount/input/words.txt 
 hdfs dfs -stat %r /wordcount/input/words.txt
