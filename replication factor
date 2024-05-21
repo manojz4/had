@@ -1,0 +1,3 @@
+(to do if safemode is on)
+hdfs dfs -setrep -w 2 /wordcount/input/words.txt
+hdfs dfs -stat %r /wordcount/input/words.txt
