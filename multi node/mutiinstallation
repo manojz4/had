@@ -265,6 +265,7 @@ ip a
 sudo nano /etc/hosts
 enter ip of both data node
 ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@dn1
+ssh-copy-id -i ~/.ssh/id_rsa.pub hduser@dn2
 cd /usr/local/hadoop/etc/hadoop
 nano workers
 	(dn1,dn2)
