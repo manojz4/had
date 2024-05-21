@@ -113,7 +113,7 @@ cd
 sudo mkdir /usr/local/hadoop/hd-data
 ip a
 -note down ip
-192.168.144.129(may vary)
+192.168.144.129 master(may vary)
 sudo nano /etc/hosts
 
 -enter ip in etc host file
